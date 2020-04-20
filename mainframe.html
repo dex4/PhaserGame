@@ -8,10 +8,18 @@
 <body>
 
   <script type="text/javascript" src="game.js"></script>
-  <div id="gameContainer" style="height:600px;"></div>
-  <div id="story-container">
-    <p>This is a test story paragraph</p>
+  <div id="gameContainer" style="height:600px; float:left;"></div>
+  <div id="story-container" style="float:left; margin-left: 32px;">
+    <div id="dude-story-container" style="width:300px; float:left; margin-left: 32px; max-width:300px; word-wrap:break-word;">
+      <p id="dude-chat">This is a test story paragraph</p>
+      <img src="assets/chat_dude.png" />
+    </div>
+    <div id="dude2-story-container" style="width:300px; float:left; margin-left: 32px; max-width:300px; word-wrap:break-word;">
+      <p id="dude2-chat">This is another story paragraph</p>
+      <img src="assets/chat_dude2.png" />
+    </div>
   </div>
+  <button type="button" style="width:60px; height: 24px; float:left; margin-top:100px;">Next></button>
 </body>
 
 </html>
