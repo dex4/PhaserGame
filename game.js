@@ -354,9 +354,9 @@ function initScoreBoard(game) {
 }
 
 function initCongratsText(game) {
-  congratsText = game.add.text(150, 100, '', {
-    fontSize: '48px',
-    fill: '#000'
+  congratsText = game.add.text(100, 70, '', {
+    fontSize: '24px',
+    fill: '#fff'
   });
 }
 
