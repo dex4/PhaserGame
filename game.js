@@ -31,6 +31,9 @@ var player;
 var player2;
 var base;
 var seminar_dudes;
+var pen_dudes;
+var friendsHelped = 0;
+var congratsText;
 
 function preload() {
   this.load.image('sky', 'assets/sky.png');
@@ -43,6 +46,7 @@ function preload() {
   this.load.image('seminar_dude', 'assets/seminar_dude.png');
   this.load.image('seminar_done_dude', 'assets/seminar_done_dude.png');
   this.load.image('pen_dude', 'assets/pen_dude.png');
+  this.load.image('pen_done_dude', 'assets/pen_done_dude.png');
   this.load.spritesheet('dude',
     'assets/dude.png', {
       frameWidth: 32,
@@ -70,7 +74,7 @@ function create() {
   initLevelTwoPlatformsSet(this);
 
   initScoreBoard(this);
-
+  initCongratsText(this);
   initPlayerOne(this);
   initPlayerTwo(this);
 
@@ -130,13 +134,29 @@ function collectPen(player, pen) {
 
   penCount += 1;
   penText.setText('Pens for the exams: ' + penCount)
-  // if (seminarsCount > 7 && penCount > 4) {
+  if (seminarsCount > 7 && penCount > 4) {
     swapLevels();
-  // }
+  }
 }
 
-function handSeminar(player, seminar) {
-  seminar.setTexture('seminar_done_dude');
+function handSeminar(player, friend) {
+  friend.setTexture('seminar_done_dude');
+  friend.disableBody(true, false);
+  friendsHelped += 1;
+  seminarScoreText.setText("Friends helped: " + friendsHelped + "/8");
+  if(friendsHelped == 8) {
+    congratsText.setText('Congratulations for helping your mates pass!');
+  }
+}
+
+function handPen(player, friend) {
+  friend.setTexture('pen_done_dude');
+  friend.disableBody(true, false);
+  friendsHelped += 1;
+  seminarScoreText.setText("Friends helped: " + friendsHelped + "/8");
+  if(friendsHelped == 8) {
+    congratsText.setText('Congratulations for helping your mates pass!');
+  }
 }
 
 function swapLevels() {
@@ -150,7 +170,9 @@ function swapLevels() {
   base.create(400, 568, 'floor').setScale(2).refreshBody();
 
   setLevelTwoPlatforms();
+  initLevelTwoScoreBoard();
   initSeminarDudes();
+  initPenDudes();
 
   player.x = 100;
   player.y = 450;
@@ -162,6 +184,7 @@ function swapLevels() {
 function initLevelTwoPlatformsSet(game) {
   platforms2 = game.physics.add.staticGroup();
   seminar_dudes = game.physics.add.staticGroup();
+  pen_dudes = game.physics.add.staticGroup();
 }
 
 function setLevelTwoPlatforms() {
@@ -301,6 +324,7 @@ function initPensToCollect(game) {
   game.physics.add.collider(pens, platforms);
   game.physics.add.collider(pens, base);
   game.physics.add.overlap(player2, pens, collectPen, null, this);
+  game.physics.add.overlap(player2, pen_dudes, handPen, null, this);
 }
 
 function initSeminarDudes() {
@@ -308,6 +332,13 @@ function initSeminarDudes() {
   seminar_dudes.create(750, 200, 'seminar_dude');
   seminar_dudes.create(100, 280, 'seminar_dude');
   seminar_dudes.create(150, 160, 'seminar_dude');
+}
+
+function initPenDudes() {
+  pen_dudes.create(650, 360, 'pen_dude');
+  pen_dudes.create(600, 200, 'pen_dude');
+  pen_dudes.create(150, 280, 'pen_dude');
+  pen_dudes.create(200, 160, 'pen_dude');
 }
 
 function initScoreBoard(game) {
@@ -320,4 +351,16 @@ function initScoreBoard(game) {
     fontSize: '18px',
     fill: '#000'
   });
+}
+
+function initCongratsText(game) {
+  congratsText = game.add.text(150, 100, '', {
+    fontSize: '48px',
+    fill: '#000'
+  });
+}
+
+function initLevelTwoScoreBoard() {
+  seminarScoreText.setText("Friends helped: 0/8");
+  penText.setText("");
 }
