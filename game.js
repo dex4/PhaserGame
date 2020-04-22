@@ -30,6 +30,7 @@ var platforms2;
 var player;
 var player2;
 var base;
+var seminar_dudes;
 
 function preload() {
   this.load.image('sky', 'assets/sky.png');
@@ -39,6 +40,9 @@ function preload() {
   this.load.image('pen', 'assets/pen.png');
   this.load.image('floor', 'assets/classroom_platform.png');
   this.load.image('classroom', 'assets/classroom.jpg');
+  this.load.image('seminar_dude', 'assets/seminar_dude.png');
+  this.load.image('seminar_done_dude', 'assets/seminar_done_dude.png');
+  this.load.image('pen_dude', 'assets/pen_dude.png');
   this.load.spritesheet('dude',
     'assets/dude.png', {
       frameWidth: 32,
@@ -126,9 +130,13 @@ function collectPen(player, pen) {
 
   penCount += 1;
   penText.setText('Pens for the exams: ' + penCount)
-  if (seminarsCount > 7 && penCount > 4) {
+  // if (seminarsCount > 7 && penCount > 4) {
     swapLevels();
-  }
+  // }
+}
+
+function handSeminar(player, seminar) {
+  seminar.setTexture('seminar_done_dude');
 }
 
 function swapLevels() {
@@ -142,6 +150,7 @@ function swapLevels() {
   base.create(400, 568, 'floor').setScale(2).refreshBody();
 
   setLevelTwoPlatforms();
+  initSeminarDudes();
 
   player.x = 100;
   player.y = 450;
@@ -152,12 +161,14 @@ function swapLevels() {
 
 function initLevelTwoPlatformsSet(game) {
   platforms2 = game.physics.add.staticGroup();
+  seminar_dudes = game.physics.add.staticGroup();
 }
 
 function setLevelTwoPlatforms() {
-  platforms2.create(500, 400, 'floor');
-  platforms2.create(100, 250, 'floor');
-  platforms2.create(200, 220, 'floor');
+  platforms2.create(700, 400, 'floor');
+  platforms2.create(750, 240, 'floor');
+  platforms2.create(100, 200, 'floor');
+  platforms2.create(120, 320, 'floor');
 }
 
 function setLevelOnePlatforms(game) {
@@ -268,6 +279,7 @@ function initSeminarsToCollect(game) {
   game.physics.add.collider(seminars, platforms);
   game.physics.add.collider(seminars, base);
   game.physics.add.overlap(player, seminars, collectSeminar, null, this);
+  game.physics.add.overlap(player, seminar_dudes, handSeminar, null, this);
 }
 
 function initPensToCollect(game) {
@@ -289,6 +301,13 @@ function initPensToCollect(game) {
   game.physics.add.collider(pens, platforms);
   game.physics.add.collider(pens, base);
   game.physics.add.overlap(player2, pens, collectPen, null, this);
+}
+
+function initSeminarDudes() {
+  seminar_dudes.create(600, 360, 'seminar_dude');
+  seminar_dudes.create(750, 200, 'seminar_dude');
+  seminar_dudes.create(100, 280, 'seminar_dude');
+  seminar_dudes.create(150, 160, 'seminar_dude');
 }
 
 function initScoreBoard(game) {
