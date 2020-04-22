@@ -142,6 +142,12 @@ function swapLevels() {
   base.create(400, 568, 'floor').setScale(2).refreshBody();
 
   setLevelTwoPlatforms();
+
+  player.x = 100;
+  player.y = 450;
+
+  player2.x = 150;
+  player2.y = 450;
 }
 
 function initLevelTwoPlatformsSet(game) {
@@ -201,6 +207,7 @@ function initPlayerOne(game) {
 
   game.physics.add.collider(player, base);
   game.physics.add.collider(player, platforms);
+  game.physics.add.collider(player, platforms2);
 }
 
 function initPlayerTwo(game) {
