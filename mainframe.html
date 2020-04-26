@@ -3,23 +3,35 @@
 
 <head>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.22.0/dist/phaser-arcade-physics.min.js"></script>
+  <script type="text/javascript" src="game.js"></script>
+  <script>
+    var index = 0;
+    var dude1Text = new Array("Hello there!", "Are you stressed?", "Yeah! We got ya! We will take care of the minimum needed supplies!", "Just one more thing!");
+    var dude2Text = new Array("We are happy to have you here!", "We know the exam session is near, so we thought to land a hand :)", "Aye, just play us!", "Yeah, please give these to whoever needs them!");
+    function getNextText(){
+      index++;
+      if(index === dude1Text.length - 1){
+        document.getElementById("btnGetNext").style.display = 'none';
+      }
+      document.getElementById("dude-chat").innerHTML = dude1Text[index];
+      document.getElementById("dude2-chat").innerHTML = dude2Text[index];
+    }
+  </script>
 </head>
 
 <body>
-
-  <script type="text/javascript" src="game.js"></script>
   <div id="gameContainer" style="height:600px; float:left;"></div>
   <div id="story-container" style="float:left; margin-left: 32px;">
     <div id="dude-story-container" style="width:300px; float:left; margin-left: 32px; max-width:300px; word-wrap:break-word;">
-      <p id="dude-chat">This is a test story paragraph</p>
+      <p id="dude-chat">Hello there!</p>
       <img src="assets/chat_dude.png" />
     </div>
     <div id="dude2-story-container" style="width:300px; float:left; margin-left: 32px; max-width:300px; word-wrap:break-word;">
-      <p id="dude2-chat">This is another story paragraph</p>
+      <p id="dude2-chat">We are happy to have you here!</p>
       <img src="assets/chat_dude2.png" />
     </div>
   </div>
-  <button type="button" style="width:60px; height: 24px; float:left; margin-top:100px;">Next></button>
+  <button id="btnGetNext" type="button" onclick="getNextText()" style="width:60px; height: 24px; float:left; margin-top:100px;">Next></button>
 </body>
 
 </html>
